@@ -1,0 +1,164 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --blue: #2463eb;
+  --blue-light: #dceaff;
+  --ink: #101827;
+  --muted: #65748b;
+  --line: #d2dce9;
+  --page: #f7f9fc;
+  --green: #20b36b;
+  --purple: #a855f7;
+  --radius: 21px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  font-family: 'Inter', 'DM Sans', sans-serif;
+  color: var(--ink);
+  background: var(--page);
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 3px solid #93baff;
+  outline-offset: 2px;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Calendar Art CSS from original prototype */
+.calendar-art {
+  position: relative;
+  width: 228px;
+  height: 155px;
+  border: 2px solid #152e51;
+  border-radius: 12px;
+  background: #fff;
+  transform: rotate(4deg);
+  box-shadow: 5px 6px 0 #83a9ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.calendar-art:before {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: 12px;
+  right: 12px;
+  height: 20px;
+  background: repeating-radial-gradient(circle at 12px 10px, #273b50 0 5px, transparent 5.5px 20px);
+  background-size: 42px 20px;
+  background-repeat: repeat-x;
+}
+
+.calendar-grid {
+  position: absolute;
+  inset: 21px 10px 10px;
+  background-image: linear-gradient(#e7edf5 1px, transparent 1px), linear-gradient(90deg, #e7edf5 1px, transparent 1px);
+  background-size: 27px 24px;
+}
+
+.calendar-person {
+  position: absolute;
+  width: 50px;
+  height: 94px;
+  bottom: -45px;
+  left: 42px;
+  z-index: 2;
+}
+
+.person-head {
+  position: absolute;
+  width: 19px;
+  height: 22px;
+  background: #b96f49;
+  border-radius: 45% 45% 40% 40%;
+  top: 0;
+  left: 16px;
+}
+
+.person-hair {
+  position: absolute;
+  top: -3px;
+  left: 14px;
+  width: 22px;
+  height: 12px;
+  border-radius: 60% 60% 15% 15%;
+  background: #111827;
+}
+
+.person-body {
+  position: absolute;
+  top: 20px;
+  left: 8px;
+  width: 35px;
+  height: 42px;
+  border-radius: 13px 13px 6px 6px;
+  background: #2873ee;
+}
+
+.person-arm {
+  position: absolute;
+  top: 25px;
+  left: 2px;
+  width: 15px;
+  height: 32px;
+  background: #b96f49;
+  border-radius: 10px;
+  transform: rotate(28deg);
+}
+
+.person-leg {
+  position: absolute;
+  top: 57px;
+  width: 15px;
+  height: 43px;
+  background: #152f55;
+  border-radius: 4px;
+}
+
+.person-leg.left {
+  left: 11px;
+}
+
+.person-leg.right {
+  left: 26px;
+}

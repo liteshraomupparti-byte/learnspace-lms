@@ -1,0 +1,2613 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/png" href="/learnspace-icon.png">
+    <title>LearnSpace — Student Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --blue: #2463eb;
+            --blue-light: #dceaff;
+            --ink: #101827;
+            --muted: #65748b;
+            --line: #d2dce9;
+            --page: #f7f9fc;
+            --green: #20b36b;
+            --purple: #a855f7;
+            --radius: 21px
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html,
+        body {
+            margin: 0;
+            min-height: 100%;
+            font-family: Inter, 'DM Sans', sans-serif;
+            color: var(--ink);
+            background: var(--page)
+        }
+
+        button,
+        input,
+        textarea {
+            font: inherit
+        }
+
+        button {
+            cursor: pointer
+        }
+
+        button:focus-visible,
+        input:focus-visible,
+        textarea:focus-visible {
+            outline: 3px solid #93baff;
+            outline-offset: 2px
+        }
+
+        .topbar {
+            height: 82px;
+            background: #fff;
+            border-bottom: 1px solid var(--line);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 34px;
+            position: sticky;
+            top: 0;
+            z-index: 20
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            color: #13233b;
+            font-size: 19px;
+            font-weight: 700;
+            letter-spacing: -.55px
+        }
+
+        .brand-icon {
+            height: 35px;
+            width: 35px;
+            border-radius: 10px;
+            background: #2463eb;
+            color: #fff;
+            display: grid;
+            place-items: center;
+            font-weight: 800;
+            font-size: 16px
+        }
+
+        .brand small {
+            display: block;
+            font-size: 10px;
+            font-weight: 500;
+            color: #6b7a90;
+            letter-spacing: 1.3px;
+            margin-top: 3px
+        }
+
+        .top-actions {
+            display: flex;
+            align-items: center;
+            gap: 18px
+        }
+
+        .round-btn {
+            width: 47px;
+            height: 47px;
+            border-radius: 50%;
+            border: 1px solid var(--line);
+            background: #fff;
+            color: #32435d;
+            display: grid;
+            place-items: center
+        }
+
+        .round-btn:hover {
+            background: #f5f8ff;
+            color: var(--blue)
+        }
+
+        .divider {
+            height: 37px;
+            width: 1px;
+            background: var(--line);
+            margin: 0 2px
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 0;
+            background: transparent;
+            text-align: left;
+            color: var(--ink);
+            padding: 0
+        }
+
+        .avatar {
+            width: 51px;
+            height: 51px;
+            border-radius: 50%;
+            background: #526a86;
+            color: #fff;
+            display: grid;
+            place-items: center;
+            font-weight: 700;
+            font-size: 18px
+        }
+
+        .profile-name {
+            font-weight: 600;
+            font-size: 16px
+        }
+
+        .profile-id {
+            font-size: 12px;
+            color: #63758e;
+            margin-top: 3px
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 128px minmax(0, 1fr);
+            min-height: calc(100vh - 82px)
+        }
+
+        .sidebar {
+            background: #fff;
+            border-right: 1px solid var(--line);
+            padding: 34px 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 10px;
+            min-height: calc(100vh - 82px)
+        }
+
+        .nav-item {
+            min-height: 76px;
+            border: 0;
+            border-radius: 15px;
+            background: transparent;
+            color: #182b47;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            padding: 10px 5px;
+            font-size: 12px;
+            font-weight: 500;
+            text-align: center
+        }
+
+        .nav-item svg {
+            width: 22px;
+            height: 22px
+        }
+
+        .nav-item:hover {
+            background: #f3f7ff
+        }
+
+        .nav-item.active {
+            background: #dceaff;
+            color: #2463eb;
+            font-weight: 600
+        }
+
+        .nav-logo {
+            height: 65px;
+            display: grid;
+            place-items: center;
+            font-weight: 800;
+            font-size: 18px;
+            font-style: italic;
+            color: #34435a;
+            letter-spacing: -1px
+        }
+
+        .main {
+            min-width: 0;
+            padding: 36px 38px 55px;
+            max-width: 1900px;
+            width: 100%;
+            margin: 0 auto
+        }
+
+        .view {
+            display: none
+        }
+
+        .view.active {
+            display: block
+        }
+
+        .welcome {
+            font-size: 25px;
+            letter-spacing: -.7px;
+            font-weight: 600;
+            margin: 0 0 36px
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.9fr) minmax(350px, 1fr);
+            gap: 34px;
+            align-items: start
+        }
+
+        .left-stack,
+        .right-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 17px;
+            min-width: 0
+        }
+
+        .panel {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            overflow: hidden
+        }
+
+        .panel-pad {
+            padding: 25px
+        }
+
+        .panel-title {
+            font-size: 20px;
+            letter-spacing: -.4px;
+            font-weight: 600;
+            margin: 0
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            margin-bottom: 20px
+        }
+
+        .carousel-controls {
+            display: flex;
+            gap: 17px;
+            align-items: center
+        }
+
+        .arrow-btn {
+            border: 0;
+            background: transparent;
+            color: #101827;
+            font-size: 27px;
+            line-height: 1;
+            padding: 0 2px
+        }
+
+        .arrow-btn:disabled {
+            color: #94a5bd
+        }
+
+        .course-carousel {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+            overflow: hidden
+        }
+
+        .continue-card {
+            min-width: 0;
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            padding: 17px;
+            display: grid;
+            grid-template-columns: 44px minmax(0, 1fr) 18px;
+            align-items: start;
+            gap: 16px;
+            min-height: 126px;
+            background: #fff
+        }
+
+        .course-round {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: #f6efff;
+            color: #8b2df4;
+            display: grid;
+            place-items: center
+        }
+
+        .course-round svg {
+            width: 21px;
+            height: 21px
+        }
+
+        .continue-title {
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 1.4;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin: 1px 0 5px
+        }
+
+        .continue-sub {
+            font-size: 14px;
+            color: #61738d;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis
+        }
+
+        .mini-meta {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            margin-top: 18px
+        }
+
+        .learning-pill {
+            background: #d1fae9;
+            color: #009b76;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap
+        }
+
+        .mini-bar {
+            height: 5px;
+            border-radius: 10px;
+            background: #edf1f7;
+            flex: 1;
+            overflow: hidden
+        }
+
+        .mini-bar span {
+            display: block;
+            height: 100%;
+            background: #21c66b;
+            border-radius: 10px
+        }
+
+        .mini-percent {
+            font-size: 12px;
+            color: #0b9b50;
+            font-weight: 600
+        }
+
+        .go-course {
+            border: 0;
+            background: transparent;
+            color: #2463eb;
+            font-size: 23px;
+            padding: 4px 0
+        }
+
+        .schedule-panel {
+            margin-top: 0
+        }
+
+        .schedule-head {
+            padding: 25px 26px 19px;
+            border-bottom: 1px solid var(--line)
+        }
+
+        .schedule-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 26px
+        }
+
+        .calendar-link {
+            border: 0;
+            background: transparent;
+            color: #2463eb;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            font-size: 14px
+        }
+
+        .date-nav {
+            display: grid;
+            grid-template-columns: 30px 1fr 30px;
+            align-items: center;
+            gap: 15px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 500
+        }
+
+        .date-nav button {
+            border: 0;
+            background: transparent;
+            font-size: 27px;
+            color: #111827
+        }
+
+        .today-pill {
+            background: #dceaff;
+            color: #2463eb;
+            border-radius: 22px;
+            padding: 8px 13px;
+            margin-left: 10px;
+            font-size: 14px
+        }
+
+        .schedule-empty {
+            min-height: 255px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden
+        }
+
+        .calendar-art {
+            position: relative;
+            width: 228px;
+            height: 155px;
+            border: 2px solid #152e51;
+            border-radius: 12px;
+            background: #fff;
+            transform: rotate(4deg);
+            box-shadow: 5px 6px 0 #83a9ff;
+            display: flex;
+            align-items: center;
+            justify-content: center
+        }
+
+        .calendar-art:before {
+            content: '';
+            position: absolute;
+            top: -12px;
+            left: 12px;
+            right: 12px;
+            height: 20px;
+            background: repeating-radial-gradient(circle at 12px 10px, #273b50 0 5px, transparent 5.5px 20px);
+            background-size: 42px 20px;
+            background-repeat: repeat-x
+        }
+
+        .calendar-grid {
+            position: absolute;
+            inset: 21px 10px 10px;
+            background-image: linear-gradient(#e7edf5 1px, transparent 1px), linear-gradient(90deg, #e7edf5 1px, transparent 1px);
+            background-size: 27px 24px
+        }
+
+        .calendar-person {
+            position: absolute;
+            width: 50px;
+            height: 94px;
+            bottom: -45px;
+            left: 42px;
+            z-index: 2
+        }
+
+        .person-head {
+            position: absolute;
+            width: 19px;
+            height: 22px;
+            background: #b96f49;
+            border-radius: 45% 45% 40% 40%;
+            top: 0;
+            left: 16px
+        }
+
+        .person-hair {
+            position: absolute;
+            top: -3px;
+            left: 14px;
+            width: 22px;
+            height: 12px;
+            border-radius: 60% 60% 15% 15%;
+            background: #111827
+        }
+
+        .person-body {
+            position: absolute;
+            top: 20px;
+            left: 8px;
+            width: 35px;
+            height: 42px;
+            border-radius: 13px 13px 6px 6px;
+            background: #2873ee
+        }
+
+        .person-arm {
+            position: absolute;
+            top: 25px;
+            left: 2px;
+            width: 15px;
+            height: 32px;
+            background: #b96f49;
+            border-radius: 10px;
+            transform: rotate(28deg)
+        }
+
+        .person-leg {
+            position: absolute;
+            top: 57px;
+            width: 15px;
+            height: 43px;
+            background: #152f55;
+            border-radius: 4px
+        }
+
+        .person-leg.left {
+            left: 11px
+        }
+
+        .person-leg.right {
+            left: 26px
+        }
+
+        .attendance {
+            padding: 26px
+        }
+
+        .attendance-head {
+            font-size: 20px;
+            font-weight: 600;
+            margin: 0 0 24px
+        }
+
+        .attendance-line {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 16px;
+            color: #344660;
+            font-size: 14px
+        }
+
+        .attendance-value {
+            font-size: 26px;
+            font-weight: 700;
+            color: #111827
+        }
+
+        .attendance-bar {
+            height: 8px;
+            background: #e5eaf2;
+            border-radius: 20px;
+            overflow: hidden
+        }
+
+        .attendance-bar span {
+            display: block;
+            width: 64.1%;
+            height: 100%;
+            border-radius: 20px;
+            background: #f04444
+        }
+
+        .warning {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            padding: 13px 14px;
+            margin-top: 16px;
+            background: #fff7ed;
+            border-radius: 13px;
+            color: #f05a19;
+            font-size: 14px
+        }
+
+        .events-panel .events-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 25px;
+            border-bottom: 1px solid var(--line)
+        }
+
+        .events-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin: 0
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px
+        }
+
+        .tab {
+            border: 0;
+            background: transparent;
+            color: #2463eb;
+            padding: 10px 17px;
+            border-radius: 25px;
+            font-size: 14px
+        }
+
+        .tab.active {
+            background: #dceaff;
+            font-weight: 600
+        }
+
+        .event-content {
+            padding: 25px
+        }
+
+        .event-image {
+            width: 100%;
+            height: 210px;
+            object-fit: cover;
+            border-radius: 17px;
+            background: #101010;
+            display: block
+        }
+
+        .event-tag {
+            display: inline-block;
+            background: #08b8d0;
+            color: white;
+            border-radius: 20px;
+            padding: 7px 13px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-top: 13px
+        }
+
+        .event-name {
+            font-size: 17px;
+            font-weight: 600;
+            margin: 14px 0 10px
+        }
+
+        .event-date {
+            font-size: 13px;
+            color: #61748e;
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+
+        .event-desc {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.5;
+            margin: 12px 0 0
+        }
+
+        /* curriculum */
+        .curriculum-wrap {
+            max-width: 1450px;
+            margin: 0 auto
+        }
+
+        .course-banner {
+            border: 1px solid var(--line);
+            background: #f8fafc;
+            border-radius: 18px;
+            padding: 25px 26px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 25px;
+            min-height: 105px
+        }
+
+        .book-icon {
+            height: 53px;
+            width: 53px;
+            border-radius: 50%;
+            background: #dceaff;
+            color: #2463eb;
+            display: grid;
+            place-items: center;
+            flex-shrink: 0
+        }
+
+        .course-banner h1 {
+            font-size: 18px;
+            font-weight: 500;
+            margin: 0
+        }
+
+        .banner-divider {
+            height: 27px;
+            width: 1px;
+            background: #d0d9e7;
+            margin: 0 3px
+        }
+
+        .count-pill {
+            border: 1px solid var(--line);
+            border-radius: 24px;
+            background: white;
+            padding: 9px 16px;
+            color: #33445d;
+            font-size: 14px;
+            white-space: nowrap
+        }
+
+        .curriculum-list {
+            display: flex;
+            flex-direction: column;
+            gap: 25px
+        }
+
+        .curriculum-course {
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            background: #f8fafc;
+            overflow: hidden
+        }
+
+        .curriculum-toggle {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            border: 0;
+            background: transparent;
+            text-align: left;
+            padding: 24px 26px;
+            color: #17253d;
+            min-height: 103px
+        }
+
+        .curriculum-toggle:hover {
+            background: #f2f7ff
+        }
+
+        .curriculum-toggle .book-icon {
+            width: 53px;
+            height: 53px
+        }
+
+        .curriculum-name {
+            font-size: 17px;
+            font-weight: 500
+        }
+
+        .curriculum-count {
+            border-left: 1px solid #d0d9e7;
+            padding-left: 14px;
+            margin-left: 2px
+        }
+
+        .curriculum-chevron {
+            margin-left: auto;
+            font-size: 22px;
+            font-weight: 600
+        }
+
+        .curriculum-lessons {
+            display: none;
+            border-top: 1px solid var(--line);
+            padding: 10px 25px 18px;
+            background: #fff
+        }
+
+        .curriculum-course.open .curriculum-lessons {
+            display: block
+        }
+
+        .curriculum-lesson {
+            width: 100%;
+            border: 0;
+            border-radius: 11px;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            text-align: left;
+            padding: 14px 12px;
+            color: #33445d
+        }
+
+        .curriculum-lesson:hover {
+            background: #f0f5ff;
+            color: var(--blue)
+        }
+
+        .lesson-small-icon {
+            width: 31px;
+            height: 31px;
+            border-radius: 50%;
+            background: #e8f1ff;
+            color: #2463eb;
+            display: grid;
+            place-items: center
+        }
+
+        .curriculum-lesson span:nth-child(2) {
+            flex: 1
+        }
+
+        .curriculum-lesson small {
+            color: #7b8ba0
+        }
+
+        /* lesson page close to reference */
+        .lesson-shell {
+            position: fixed;
+            inset: 82px 0 0 0;
+            display: none;
+            grid-template-columns: 312px minmax(0, 1fr);
+            background: #fff;
+            z-index: 15
+        }
+
+        .lesson-shell.active {
+            display: grid
+        }
+
+        .lesson-sidebar {
+            border-right: 1px solid var(--line);
+            overflow-y: auto;
+            background: #fff
+        }
+
+        .crumbs {
+            height: 62px;
+            border-bottom: 1px solid var(--line);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0 16px;
+            color: #52647d;
+            white-space: nowrap;
+            overflow: hidden
+        }
+
+        .crumbs button {
+            border: 0;
+            background: transparent;
+            color: #52647d;
+            font-size: 14px;
+            padding: 0
+        }
+
+        .lesson-sidebar-head {
+            padding: 12px
+        }
+
+        .lesson-group {
+            border: 1px solid var(--line);
+            border-radius: 11px;
+            margin-bottom: 8px;
+            overflow: hidden
+        }
+
+        .lesson-group-toggle {
+            width: 100%;
+            border: 0;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            text-align: left;
+            padding: 18px 13px;
+            font-size: 15px;
+            font-weight: 500;
+            line-height: 1.4
+        }
+
+        .lesson-group-toggle:hover {
+            background: #f8faff
+        }
+
+        .group-icon {
+            color: #a044f4;
+            font-size: 21px
+        }
+
+        .group-chevron {
+            margin-left: auto;
+            color: #53647c
+        }
+
+        .lesson-sublist {
+            display: none;
+            padding: 0 12px 10px
+        }
+
+        .lesson-group.open .lesson-sublist {
+            display: block
+        }
+
+        .lesson-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            border: 0;
+            background: #fff;
+            width: 100%;
+            padding: 11px 8px;
+            text-align: left;
+            border-radius: 9px;
+            color: #273951;
+            font-size: 13px;
+            line-height: 1.45
+        }
+
+        .lesson-nav-item:hover,
+        .lesson-nav-item.selected {
+            background: #edf4ff
+        }
+
+        .lesson-nav-item .done-mark {
+            margin-left: auto;
+            color: var(--green);
+            font-size: 17px
+        }
+
+        .lesson-nav-item .tiny-icon {
+            width: 23px;
+            color: #2463eb;
+            font-size: 17px;
+            flex-shrink: 0
+        }
+
+        .lesson-main {
+            display: grid;
+            grid-template-columns: minmax(0, 1.4fr) minmax(310px, .95fr);
+            min-width: 0;
+            overflow: hidden
+        }
+
+        .video-column {
+            padding: 0 10px 24px 0;
+            overflow-y: auto;
+            border-right: 1px solid var(--line);
+            min-width: 0
+        }
+
+        .lesson-topline {
+            height: 62px;
+            border-bottom: 1px solid var(--line);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            gap: 15px
+        }
+
+        .lesson-topline h1 {
+            font-size: 19px;
+            font-weight: 600;
+            margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis
+        }
+
+        .expand-btn {
+            border: 0;
+            background: transparent;
+            color: #687991;
+            font-size: 20px
+        }
+
+        .video-frame {
+            margin: 16px 16px 0 0;
+            aspect-ratio: 16/9;
+            max-height: calc(100vh - 275px);
+            background: #050505;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            display: grid;
+            place-items: center
+        }
+
+        .video-frame iframe {
+            width: 100%;
+            height: 100%;
+            border: 0
+        }
+
+        .video-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 13px;
+            color: #d5d5d5;
+            text-align: center;
+            padding: 25px
+        }
+
+        .play-circle {
+            width: 51px;
+            height: 51px;
+            border-radius: 50%;
+            background: white;
+            color: #111;
+            display: grid;
+            place-items: center;
+            font-size: 22px;
+            padding-left: 4px
+        }
+
+        .video-placeholder p {
+            margin: 0;
+            font-size: 13px;
+            color: #aaa
+        }
+
+        .video-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 16px 12px 0;
+            border-bottom: 1px solid var(--line);
+            gap: 10px
+        }
+
+        .subtle-action {
+            border: 0;
+            background: transparent;
+            color: #60728b;
+            font-size: 13px
+        }
+
+        .complete-btn {
+            border: 1px solid #cdd9eb;
+            border-radius: 9px;
+            background: #fff;
+            color: #31435d;
+            padding: 9px 12px;
+            font-size: 12px
+        }
+
+        .lesson-bottom-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 15px 16px 0 0
+        }
+
+        .btn-outline {
+            border: 1px solid var(--line);
+            background: #fff;
+            color: #32455f;
+            border-radius: 10px;
+            padding: 10px 13px;
+            font-size: 13px
+        }
+
+        .btn-blue {
+            border: 0;
+            background: #2463eb;
+            color: #fff;
+            border-radius: 10px;
+            padding: 10px 14px;
+            font-size: 13px
+        }
+
+        .resource-column {
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            background: #fff
+        }
+
+        .resource-tabs {
+            height: 62px;
+            display: flex;
+            align-items: stretch;
+            border-bottom: 1px solid var(--line);
+            gap: 0
+        }
+
+        .resource-tab {
+            border: 0;
+            background: #fff;
+            color: #61748f;
+            padding: 0 20px;
+            font-size: 14px;
+            position: relative
+        }
+
+        .resource-tab.active {
+            color: #8b4ff0;
+            font-weight: 600
+        }
+
+        .resource-tab.active:after {
+            content: '';
+            height: 2px;
+            background: #2463eb;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0
+        }
+
+        .resource-content {
+            padding: 24px;
+            overflow: auto
+        }
+
+        .resource-content h3 {
+            font-size: 16px;
+            margin: 0 0 12px
+        }
+
+        .resource-content p {
+            font-size: 13px;
+            color: #65748b;
+            line-height: 1.6
+        }
+
+        .resource-content textarea {
+            width: 100%;
+            min-height: 190px;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 13px;
+            resize: vertical
+        }
+
+        .resource-footer {
+            margin-top: auto;
+            padding: 14px 20px;
+            border-top: 1px solid var(--line);
+            display: flex;
+            gap: 10px
+        }
+
+        .resource-footer input {
+            flex: 1;
+            min-width: 0;
+            border: 0;
+            border-radius: 24px;
+            background: #f2f5f9;
+            padding: 14px 17px;
+            color: #7d8ba0
+        }
+
+        .resource-footer button {
+            border: 0;
+            background: transparent;
+            color: #8b9bb0;
+            font-size: 20px
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 22px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: #13233b;
+            color: white;
+            padding: 12px 17px;
+            border-radius: 11px;
+            font-size: 13px;
+            opacity: 0;
+            pointer-events: none;
+            transition: .2s;
+            z-index: 50
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0)
+        }
+
+        @media(max-width:1200px) {
+            .main {
+                padding: 28px 22px
+            }
+
+            .dashboard-grid {
+                grid-template-columns: minmax(0, 1.5fr) minmax(300px, .9fr);
+                gap: 20px
+            }
+
+            .course-carousel {
+                grid-template-columns: 1fr
+            }
+
+            .continue-card:nth-child(n+3) {
+                display: none
+            }
+
+            .lesson-main {
+                grid-template-columns: minmax(0, 1fr) 320px
+            }
+
+            .resource-tab {
+                padding: 0 12px
+            }
+        }
+
+        @media(max-width:900px) {
+            .topbar {
+                padding: 0 18px;
+                height: 72px
+            }
+
+            .layout {
+                grid-template-columns: 86px minmax(0, 1fr);
+                min-height: calc(100vh - 72px)
+            }
+
+            .sidebar {
+                padding: 22px 8px;
+                min-height: calc(100vh - 72px)
+            }
+
+            .nav-item {
+                min-height: 68px;
+                font-size: 10px
+            }
+
+            .nav-logo {
+                height: 52px
+            }
+
+            .brand {
+                font-size: 16px
+            }
+
+            .brand-icon {
+                width: 31px;
+                height: 31px
+            }
+
+            .top-actions {
+                gap: 8px
+            }
+
+            .round-btn {
+                width: 39px;
+                height: 39px
+            }
+
+            .avatar {
+                width: 40px;
+                height: 40px
+            }
+
+            .profile-id {
+                display: none
+            }
+
+            .main {
+                padding: 25px 17px
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr
+            }
+
+            .right-stack {
+                display: grid;
+                grid-template-columns: 1fr 1fr
+            }
+
+            .events-panel {
+                grid-column: 1/-1
+            }
+
+            .event-image {
+                height: 180px
+            }
+
+            .lesson-shell {
+                inset: 72px 0 0;
+                grid-template-columns: 250px minmax(0, 1fr)
+            }
+
+            .lesson-main {
+                grid-template-columns: 1fr
+            }
+
+            .resource-column {
+                display: none
+            }
+
+            .video-column {
+                padding-left: 14px
+            }
+
+            .video-frame {
+                margin-right: 0
+            }
+
+            .lesson-topline {
+                padding-left: 0
+            }
+        }
+
+        @media(max-width:620px) {
+            .topbar {
+                height: 64px;
+                padding: 0 12px
+            }
+
+            .brand small {
+                display: none
+            }
+
+            .top-actions .round-btn:nth-child(1),
+            .top-actions .divider {
+                display: none
+            }
+
+            .profile-name {
+                display: none
+            }
+
+            .avatar {
+                width: 36px;
+                height: 36px
+            }
+
+            .layout {
+                display: block;
+                min-height: calc(100vh - 64px)
+            }
+
+            .sidebar {
+                position: fixed;
+                z-index: 30;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                top: auto;
+                height: 68px;
+                min-height: 0;
+                padding: 5px 7px;
+                border-right: 0;
+                border-top: 1px solid var(--line);
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 4px;
+                flex-direction: row
+            }
+
+            .nav-item {
+                min-height: 56px;
+                border-radius: 10px;
+                gap: 3px;
+                font-size: 10px;
+                padding: 4px
+            }
+
+            .nav-item svg {
+                width: 19px;
+                height: 19px
+            }
+
+            .nav-logo {
+                display: none
+            }
+
+            .main {
+                padding: 23px 13px 90px
+            }
+
+            .welcome {
+                font-size: 22px;
+                margin-bottom: 23px
+            }
+
+            .dashboard-grid {
+                gap: 15px
+            }
+
+            .panel-pad {
+                padding: 17px
+            }
+
+            .panel-title,
+            .attendance-head,
+            .events-title {
+                font-size: 17px
+            }
+
+            .continue-card {
+                padding: 13px;
+                gap: 10px;
+                grid-template-columns: 37px minmax(0, 1fr) 14px
+            }
+
+            .course-round {
+                height: 37px;
+                width: 37px
+            }
+
+            .continue-title {
+                font-size: 13px
+            }
+
+            .continue-sub {
+                font-size: 12px
+            }
+
+            .mini-meta {
+                gap: 5px;
+                margin-top: 12px
+            }
+
+            .learning-pill {
+                font-size: 10px;
+                padding: 5px 7px
+            }
+
+            .mini-percent {
+                font-size: 10px
+            }
+
+            .schedule-head {
+                padding: 18px 14px
+            }
+
+            .date-nav {
+                font-size: 13px;
+                gap: 5px
+            }
+
+            .today-pill {
+                padding: 6px 8px;
+                margin-left: 3px;
+                font-size: 11px
+            }
+
+            .schedule-empty {
+                min-height: 200px
+            }
+
+            .right-stack {
+                display: flex
+            }
+
+            .attendance {
+                padding: 18px
+            }
+
+            .events-panel .events-head {
+                padding: 18px
+            }
+
+            .event-content {
+                padding: 15px
+            }
+
+            .event-image {
+                height: 160px
+            }
+
+            .course-banner {
+                padding: 17px;
+                min-height: 85px;
+                gap: 10px
+            }
+
+            .book-icon {
+                width: 43px;
+                height: 43px
+            }
+
+            .course-banner h1 {
+                font-size: 15px
+            }
+
+            .count-pill {
+                font-size: 12px;
+                padding: 7px 10px
+            }
+
+            .curriculum-list {
+                gap: 12px
+            }
+
+            .curriculum-toggle {
+                padding: 16px 13px;
+                gap: 9px;
+                min-height: 78px
+            }
+
+            .curriculum-toggle .book-icon {
+                width: 42px;
+                height: 42px
+            }
+
+            .curriculum-name {
+                font-size: 13px
+            }
+
+            .curriculum-count {
+                font-size: 11px;
+                padding-left: 8px
+            }
+
+            .lesson-shell {
+                inset: 64px 0 68px;
+                grid-template-columns: 1fr
+            }
+
+            .lesson-sidebar {
+                display: none
+            }
+
+            .lesson-main {
+                display: block;
+                overflow-y: auto
+            }
+
+            .video-column {
+                border: 0;
+                padding: 0 12px 18px
+            }
+
+            .lesson-topline {
+                height: 54px;
+                padding: 0
+            }
+
+            .lesson-topline h1 {
+                font-size: 16px
+            }
+
+            .video-frame {
+                margin: 12px 0 0;
+                aspect-ratio: 16/9;
+                max-height: none
+            }
+
+            .video-controls {
+                padding-right: 0
+            }
+
+            .lesson-bottom-nav {
+                padding-right: 0
+            }
+
+            .resource-column {
+                display: none
+            }
+
+            .resource-content {
+                padding: 16px
+            }
+
+            .resource-tabs {
+                height: 52px
+            }
+
+            .resource-tab {
+                padding: 0 13px;
+                font-size: 12px
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="topbar">
+        <div class="brand">
+            <img src="/learnspace-logo.png" onerror="this.onerror=null;this.src='public/learnspace-logo.png'" alt="LearnSpace — Your Learning Portal" style="height: 44px; width: auto; object-fit: contain; display: block;" />
+        </div>
+        <div class="top-actions">
+            <button class="round-btn" id="shortcutBtn" aria-label="Shortcuts"><svg width="23" height="23"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <rect x="3" y="4" width="18" height="16" rx="2" />
+                    <path d="M7 9h10M7 13h5M7 17h7" />
+                </svg></button>
+            <button class="round-btn" id="searchBtn" aria-label="Search"><svg width="23" height="23" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="1.8">
+                    <circle cx="10.8" cy="10.8" r="7.4" />
+                    <path d="m16.3 16.3 4.2 4.2" />
+                </svg></button>
+            <button class="round-btn" id="quickBtn" aria-label="Quick actions"><svg width="23" height="23"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="m13 2-9 12h7l-1 8 10-13h-7z" />
+                </svg></button>
+            <div class="divider"></div>
+            <div id="authContainer" style="display: flex; align-items: center; gap: 10px; position: relative;">
+                <button id="googleLoginBtn" style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 12px; font-size: 13px; font-weight: 600; background: #2463eb; color: #fff; border: none; cursor: pointer; box-shadow: 0 1px 3px rgba(36,99,235,0.25);">
+                    <svg width="15" height="15" viewBox="0 0 24 24"><path fill="#fff" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#fff" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#fff" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#fff" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+                    <span>Sign In with Google</span>
+                </button>
+                <div id="userProfileSection" style="display: none; position: relative;">
+                    <button class="profile" id="profileBtn" style="cursor: pointer;">
+                        <span class="avatar" id="userAvatar">ST</span>
+                        <span>
+                            <span class="profile-name" id="userName">Student</span>
+                            <span class="profile-id" id="userEmail" style="display:block">Active Session</span>
+                        </span>
+                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="m6 9 6 6 6-6" />
+                        </svg>
+                    </button>
+                    <div id="profileDropdown" style="display: none; position: absolute; right: 0; top: 58px; background: #fff; border: 1px solid #d2dce9; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.12); width: 230px; z-index: 100; overflow: hidden; padding: 6px;">
+                        <div style="padding: 10px 14px; border-bottom: 1px solid #edf2f7;">
+                            <div id="menuUserName" style="font-weight: 600; font-size: 13px; color: #101827;">Student</div>
+                            <div id="menuUserEmail" style="font-size: 11px; color: #64748b; word-break: break-all; margin-top: 2px;">student@example.com</div>
+                        </div>
+                        <a href="http://localhost:3000/" target="_blank" style="display: flex; align-items: center; gap: 8px; padding: 10px 12px; font-size: 12px; color: #2463eb; font-weight: 500; text-decoration: none; border-radius: 10px; margin-top: 4px;" onmouseover="this.style.background='#f0f4ff'" onmouseout="this.style.background='transparent'">
+                            <span>🚀 Open React Portal (:3000)</span>
+                        </a>
+                        <button id="logoutBtn" style="width: 100%; text-align: left; background: transparent; border: 0; padding: 10px 12px; font-size: 12px; color: #ef4444; font-weight: 500; cursor: pointer; border-radius: 10px; display: flex; align-items: center; gap: 8px; margin-top: 2px;" onmouseover="this.style.background='#fef2f2'" onmouseout="this.style.background='transparent'">
+                            <span>Sign Out</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="layout">
+        <aside class="sidebar" id="sidebar">
+            <button class="nav-item active" data-page="dashboard"><svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z" />
+                </svg><span>Home</span></button>
+            <button class="nav-item" data-page="curriculum"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.7">
+                    <path d="M3 5.5A3.5 3.5 0 0 1 6.5 2H11v18H6.5A3.5 3.5 0 0 0 3 23z" />
+                    <path d="M21 5.5A3.5 3.5 0 0 0 17.5 2H13v18h4.5A3.5 3.5 0 0 1 21 23z" />
+                </svg><span>Curriculum</span></button>
+            <div class="nav-logo">GRIT</div>
+            <button class="nav-item" data-page="other"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.7">
+                    <path d="M9 18h6M10 21h4M8.5 14.5a7 7 0 1 1 7 0c-1.2.9-1.5 1.7-1.5 2.5h-4c0-.8-.3-1.6-1.5-2.5Z" />
+                    <path d="M12 2v2M4.9 5l1.4 1.4M19.1 5l-1.4 1.4" />
+                </svg><span>Other<br>Courses</span></button>
+            <button class="nav-item" data-page="exams"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.7">
+                    <path d="M7 3h10a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z" />
+                    <path d="M8 8h8M8 12h5M8 16h4" />
+                    <path d="m15 16 1.5 1.5L20 14" />
+                </svg><span>Exams</span></button>
+        </aside>
+        <main class="main">
+            <section class="view active" id="view-dashboard">
+                <h1 class="welcome">Good Morning, Litesh 👋</h1>
+                <div class="dashboard-grid">
+                    <div class="left-stack">
+                        <section class="panel panel-pad">
+                            <div class="panel-header">
+                                <h2 class="panel-title">Continue from Where You Left Off</h2>
+                                <div class="carousel-controls"><button class="arrow-btn" id="carouselPrev"
+                                        aria-label="Previous courses">‹</button><button class="arrow-btn"
+                                        id="carouselNext" aria-label="Next courses">›</button></div>
+                            </div>
+                            <div class="course-carousel" id="continueCarousel">
+                                <article class="continue-card">
+                                    <div class="course-round"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="1.8">
+                                            <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v17H6.5A2.5 2.5 0 0 0 4 22z" />
+                                            <path d="M4 5.5v14A2.5 2.5 0 0 1 6.5 17H20" />
+                                        </svg></div>
+                                    <div>
+                                        <div class="continue-title">Programming Foundations</div>
+                                        <div class="continue-sub">Loops</div>
+                                        <div class="mini-meta"><span class="learning-pill">&lt;/&gt; Learning</span>
+                                            <div class="mini-bar"><span style="width:33%"></span></div><span
+                                                class="mini-percent">33%</span>
+                                        </div>
+                                    </div><button class="go-course" data-open-lesson
+                                        aria-label="Continue Programming Foundations">›</button>
+                                </article>
+                                <article class="continue-card">
+                                    <div class="course-round"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="1.8">
+                                            <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v17H6.5A2.5 2.5 0 0 0 4 22z" />
+                                            <path d="M4 5.5v14A2.5 2.5 0 0 1 6.5 17H20" />
+                                        </svg></div>
+                                    <div>
+                                        <div class="continue-title">Innovators Workshop Series</div>
+                                        <div class="continue-sub">GuardSense: Building an IoT Intruder...</div>
+                                        <div class="mini-meta"><span class="learning-pill">&lt;/&gt; Learning</span>
+                                            <div class="mini-bar"><span style="width:4%"></span></div><span
+                                                class="mini-percent">4%</span>
+                                        </div>
+                                    </div><button class="go-course" data-open-lesson
+                                        aria-label="Continue workshop">›</button>
+                                </article>
+                                <article class="continue-card extra-course">
+                                    <div class="course-round"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="1.8">
+                                            <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v17H6.5A2.5 2.5 0 0 0 4 22z" />
+                                        </svg></div>
+                                    <div>
+                                        <div class="continue-title">Web Application Development</div>
+                                        <div class="continue-sub">HTML and CSS</div>
+                                        <div class="mini-meta"><span class="learning-pill">&lt;/&gt; Learning</span>
+                                            <div class="mini-bar"><span style="width:18%"></span></div><span
+                                                class="mini-percent">18%</span>
+                                        </div>
+                                    </div><button class="go-course" data-open-lesson
+                                        aria-label="Continue web development">›</button>
+                                </article>
+                            </div>
+                        </section>
+                        <section class="panel schedule-panel">
+                            <div class="schedule-head">
+                                <div class="schedule-top">
+                                    <h2 class="panel-title">Your Schedule</h2><button class="calendar-link"
+                                        id="calendarBtn"><svg width="23" height="23" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="1.8">
+                                            <rect x="3" y="5" width="18" height="16" rx="2" />
+                                            <path d="M16 3v4M8 3v4M3 10h18" />
+                                        </svg> Calendar</button>
+                                </div>
+                                <div class="date-nav"><button id="prevDate" aria-label="Previous day">‹</button>
+                                    <div><span id="scheduleDate">Monday, October 26, 2026</span><span class="today-pill"
+                                            id="todayPill">Today</span></div><button id="nextDate"
+                                        aria-label="Next day">›</button>
+                                </div>
+                            </div>
+                            <div class="schedule-empty">
+                                <div class="calendar-art">
+                                    <div class="calendar-grid"></div>
+                                </div>
+                                <div class="calendar-person">
+                                    <div class="person-hair"></div>
+                                    <div class="person-head"></div>
+                                    <div class="person-body"></div>
+                                    <div class="person-arm"></div>
+                                    <div class="person-leg left"></div>
+                                    <div class="person-leg right"></div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="right-stack">
+                        <section class="panel attendance">
+                            <h2 class="attendance-head">Your Learning Marker</h2>
+                            <div class="attendance-line"><span>Overall Course Progress</span><strong
+                                    class="attendance-value">33%</strong></div>
+                            <div class="attendance-bar"><span style="width:33%"></span></div>
+                            <div class="warning"><span>ⓘ</span><span>Keep learning — you're making progress.</span>
+                            </div>
+                        </section>
+                        <section class="panel events-panel">
+                            <div class="events-head">
+                                <h2 class="events-title">Learning Updates</h2>
+                                <div class="tabs"><button class="tab active"
+                                        data-event-tab="upcoming">Upcoming</button><button class="tab"
+                                        data-event-tab="past">Past</button></div>
+                            </div>
+                            <div class="event-content" id="eventContent">
+                                <div class="event-visual"
+                                    style="height:210px;border-radius:17px;background:#080a10;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden">
+                                    <div
+                                        style="position:absolute;inset:0;background:radial-gradient(circle at 78% 25%,#243d69 0,transparent 35%),linear-gradient(135deg,#0a0b0e,#171c28)">
+                                    </div>
+                                    <div style="position:relative;text-align:left;color:white;width:85%">
+                                        <div style="font-size:10px;letter-spacing:3px;color:#b5c4d8">LEARNING SPOTLIGHT
+                                        </div>
+                                        <div style="font-size:30px;line-height:1.05;font-weight:800;margin-top:16px">
+                                            BUILD<br>YOUR NEXT<br><span style="color:#4e8cff">BIG IDEA</span></div>
+                                        <div style="font-size:10px;margin-top:15px;color:#b7c6d9">LEARN • PRACTICE •
+                                            CREATE</div>
+                                    </div>
+                                </div><span class="event-tag">Learning Reminder</span>
+                                <h3 class="event-name">Python Practice Session</h3>
+                                <div class="event-date"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="1.8">
+                                        <rect x="3" y="5" width="18" height="16" rx="2" />
+                                        <path d="M16 3v4M8 3v4M3 10h18" />
+                                    </svg> 26 Oct, 2026</div>
+                                <p class="event-desc">Continue your Python course and finish the next lesson in your
+                                    learning path.</p>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </section>
+            <section class="view" id="view-curriculum">
+                <div class="curriculum-wrap">
+                    <div class="course-banner">
+                        <div class="book-icon"><svg width="25" height="25" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="1.8">
+                                <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v17H6.5A2.5 2.5 0 0 0 4 22z" />
+                                <path d="M4 5.5v14A2.5 2.5 0 0 1 6.5 17H20" />
+                            </svg></div>
+                        <h1>My Curriculum</h1><span class="banner-divider"></span><span class="count-pill">Courses:
+                            6</span>
+                    </div>
+                    <div class="curriculum-list" id="curriculumList"></div>
+                </div>
+            </section>
+            <section class="view" id="view-other">
+                <div class="curriculum-wrap">
+                    <h1 class="welcome">Other Courses</h1>
+                    <div class="panel panel-pad">
+                        <h2 class="panel-title">Explore your learning path</h2>
+                        <p style="color:var(--muted);line-height:1.7">Add courses through your future admin panel. Your
+                            course library will appear here.</p><button class="btn-blue"
+                            data-page-link="curriculum">Browse Curriculum</button>
+                    </div>
+                </div>
+            </section>
+            <section class="view" id="view-exams">
+                <div class="curriculum-wrap">
+                    <h1 class="welcome">Exams & Practice</h1>
+                    <div class="panel panel-pad">
+                        <h2 class="panel-title">Practice area</h2>
+                        <p style="color:var(--muted);line-height:1.7">This section can hold quizzes and assessments when
+                            you decide to add them.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <section class="lesson-shell" id="lessonShell">
+        <aside class="lesson-sidebar">
+            <div class="crumbs"><button data-back-curriculum>⌂</button><span>/</span><button
+                    data-back-curriculum id="crumbCourse">Python</button><span>/</span><span id="crumbModule">Loops</span></div>
+            <div class="lesson-sidebar-head" id="lessonSidebarGroups"></div>
+        </aside>
+        <div class="lesson-main">
+            <section class="video-column">
+                <div class="lesson-topline">
+                    <h1 id="lessonTitle">Introduction to Loops</h1><button class="expand-btn" id="expandVideo"
+                        aria-label="Expand video">⛶</button>
+                </div>
+                <div class="video-frame" id="videoFrame">
+                    <div class="video-placeholder">
+                        <div class="play-circle">▶</div>
+                        <p>Select a lesson with a configured YouTube video.</p>
+                    </div>
+                </div>
+                <div class="video-controls"><button class="subtle-action" id="showVideoDetails">⌃ &nbsp; Video
+                        lesson</button><button class="subtle-action" id="feedbackBtn">♧ &nbsp; Lesson details
+                        &nbsp;⌄</button></div>
+                <div class="lesson-bottom-nav"><button class="btn-outline" id="prevLesson">← Previous
+                        lesson</button><button class="complete-btn" id="completeLesson">✓ &nbsp; Mark as
+                        complete</button><button class="btn-blue" id="nextLesson">Next lesson →</button></div>
+            </section>
+            <aside class="resource-column">
+                <div class="resource-tabs"><button class="resource-tab active" data-resource="details">Lesson
+                        Details</button><button class="resource-tab" data-resource="notes">My Notes</button><button
+                        class="resource-tab" data-resource="resources">Resources</button></div>
+                <div class="resource-content" id="resourceContent">
+                    <h3>About this lesson</h3>
+                    <p>Choose a topic from the left to view its lesson. Add your verified YouTube video ID later through
+                        the course configuration.</p>
+                    <h3 style="margin-top:28px">Your learning checklist</h3>
+                    <p>▶ Watch the lesson<br>✎ Review your notes<br>✓ Mark the lesson complete when you're done</p>
+                </div>
+                <div class="resource-footer"><input id="quickNote" placeholder="Write a quick note..."
+                        aria-label="Quick note"><button id="saveQuickNote" aria-label="Save note">➤</button></div>
+            </aside>
+        </div>
+    </section>
+    <div class="toast" id="toast" role="status"></div>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+        import { getAnalytics, isSupported } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js";
+        import { getAuth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc, collection, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyD3yIBXSomaYyy6sFUb8cUyAmg5aqR9v0c",
+            authDomain: "portalclone-68806.firebaseapp.com",
+            projectId: "portalclone-68806",
+            storageBucket: "portalclone-68806.firebasestorage.app",
+            messagingSenderId: "468623737678",
+            appId: "1:468623737678:web:ddf8135d178e91ff29d41f",
+            measurementId: "G-DTC15V7QJY"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        isSupported().then(yes => yes && getAnalytics(app));
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        window.firebaseApp = app;
+        window.firebaseAuth = auth;
+        window.firebaseDb = db;
+        window.currentUser = null;
+
+        const googleLoginBtn = document.getElementById('googleLoginBtn');
+        const userProfileSection = document.getElementById('userProfileSection');
+        const profileDropdown = document.getElementById('profileDropdown');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const profileBtn = document.getElementById('profileBtn');
+
+        if (profileBtn && profileDropdown) {
+            profileBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isShown = profileDropdown.style.display === 'block';
+                profileDropdown.style.display = isShown ? 'none' : 'block';
+            });
+            document.addEventListener('click', () => {
+                if (profileDropdown) profileDropdown.style.display = 'none';
+            });
+        }
+
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', async () => {
+                try {
+                    await signOut(auth);
+                    toast('Signed out successfully.');
+                    if (profileDropdown) profileDropdown.style.display = 'none';
+                } catch (e) {
+                    toast('Error signing out: ' + e.message);
+                }
+            });
+        }
+
+        if (googleLoginBtn) {
+            googleLoginBtn.addEventListener('click', async () => {
+                const provider = new GoogleAuthProvider();
+                provider.setCustomParameters({ prompt: 'select_account' });
+                try {
+                    const result = await signInWithPopup(auth, provider);
+                    toast('Welcome, ' + (result.user.displayName || 'Student') + '!');
+                } catch (err) {
+                    console.error('Google Sign-In Error:', err);
+                    if (err.code === 'auth/unauthorized-domain') {
+                        const is127 = window.location.hostname === '127.0.0.1';
+                        const altUrl = window.location.href.replace('127.0.0.1', 'localhost');
+                        alert(
+                            'Domain Authorization Required:\n\n' +
+                            (is127 
+                              ? 'You opened this on 127.0.0.1. In Firebase Console, only "localhost" is authorized by default.\n\nQuick Solution:\nOpen ' + altUrl + ' in your browser!\n\nOr in Firebase Console: Authentication > Settings > Authorized Domains > Add "127.0.0.1".'
+                              : 'Please add ' + window.location.hostname + ' to Firebase Authorized Domains.')
+                        );
+                    } else if (err.code === 'auth/popup-closed-by-user') {
+                        toast('Sign-in window closed.');
+                    } else {
+                        toast('Sign in failed: ' + err.message);
+                    }
+                }
+            });
+        }
+
+        onAuthStateChanged(auth, async (user) => {
+            window.currentUser = user;
+            if (user) {
+                if (googleLoginBtn) googleLoginBtn.style.display = 'none';
+                if (userProfileSection) userProfileSection.style.display = 'block';
+
+                const name = user.displayName || user.email?.split('@')[0] || 'Student';
+                const email = user.email || '';
+                const initials = name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'ST';
+
+                const userNameEl = document.getElementById('userName');
+                const userEmailEl = document.getElementById('userEmail');
+                const userAvatar = document.getElementById('userAvatar');
+                const menuUserName = document.getElementById('menuUserName');
+                const menuUserEmail = document.getElementById('menuUserEmail');
+
+                if (userNameEl) userNameEl.textContent = name;
+                if (userEmailEl) userEmailEl.textContent = 'Active (Firebase)';
+                if (menuUserName) menuUserName.textContent = name;
+                if (menuUserEmail) menuUserEmail.textContent = email;
+
+                if (userAvatar) {
+                    if (user.photoURL) {
+                        userAvatar.innerHTML = `<img src="${user.photoURL}" alt="${name}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" />`;
+                    } else {
+                        userAvatar.textContent = initials;
+                    }
+                }
+
+                // Save or update user profile doc in Firestore
+                try {
+                    await setDoc(doc(db, 'users', user.uid), {
+                        uid: user.uid,
+                        email: email,
+                        displayName: name,
+                        photoURL: user.photoURL || null,
+                        role: 'student',
+                        updatedAt: serverTimestamp()
+                    }, { merge: true });
+                } catch (e) {
+                    console.warn('Profile write notice:', e);
+                }
+
+                // Sync completed lessons from Firestore
+                try {
+                    const snap = await getDocs(collection(db, 'userProgress'));
+                    snap.forEach(d => {
+                        const data = d.data();
+                        if (data.uid === user.uid && data.completed) {
+                            window.completed?.add(data.moduleId + '-' + data.lessonIndex);
+                        }
+                    });
+                    if (typeof window.updateLesson === 'function') window.updateLesson();
+                } catch (e) {
+                    console.warn('Progress sync notice:', e);
+                }
+            } else {
+                if (googleLoginBtn) googleLoginBtn.style.display = 'inline-flex';
+                if (userProfileSection) userProfileSection.style.display = 'none';
+            }
+        });
+
+        window.saveProgressFirebase = async function(modIndex, lesIndex) {
+            if (!window.currentUser) return;
+            try {
+                await setDoc(doc(db, 'userProgress', `${window.currentUser.uid}_mod${modIndex}_les${lesIndex}`), {
+                    uid: window.currentUser.uid,
+                    moduleId: modIndex,
+                    lessonIndex: lesIndex,
+                    completed: true,
+                    updatedAt: serverTimestamp()
+                }, { merge: true });
+            } catch (e) {
+                console.warn('Could not save progress to Firestore:', e);
+            }
+        };
+
+        window.saveNoteFirebase = async function(modIndex, lesIndex, text) {
+            if (!window.currentUser) return;
+            try {
+                await setDoc(doc(db, 'userNotes', `${window.currentUser.uid}_mod${modIndex}_les${lesIndex}`), {
+                    uid: window.currentUser.uid,
+                    moduleId: modIndex,
+                    lessonIndex: lesIndex,
+                    note: text,
+                    updatedAt: serverTimestamp()
+                }, { merge: true });
+            } catch (e) {
+                console.warn('Could not save note to Firestore:', e);
+            }
+        };
+    </script>
+    <script>
+        const courseData = [
+            {
+                name: 'Computer Programming with Python',
+                modules: [
+                    {
+                        title: 'Topic 01: Introduction to Python',
+                        lessons: [
+                            { title: 'Programming with Python', videoId: '7wnove7K-ZQ', desc: 'Introduction to Python, installation, REPL vs scripts, and the execution model.', notes: 'Python is a high-level, interpreted language known for clean, readable syntax.' },
+                            { title: 'Writing Your First Python Program', videoId: '7IWOYhfAcVg', desc: 'Creating, running, and debugging your first .py script step by step.', notes: 'Use print() to display output. Python executes scripts top-to-bottom.' },
+                            { title: 'Python Modules & Pip Package Manager', videoId: 'xwKO_y2gHxQ', desc: 'Built-in vs external modules and installing packages with pip.', notes: 'Run pip install <package_name> to install libraries from PyPI.' },
+                            { title: 'Leveraging GenAI for Accelerated Learning', videoId: 'Tto8TS-fJQU', desc: 'Real-world Python applications and using AI responsibly as a coding partner.', notes: 'Use AI to explain compiler errors and generate practice problems.' }
+                        ]
+                    },
+                    {
+                        title: 'Topic 02: Sequence of Instructions & I/O',
+                        lessons: [
+                            { title: 'Comments, Escape Sequences & Print Statement', videoId: 'qxPMmW93eDs', desc: 'Sequential execution, # comments, \\n and \\t escape sequences, and print(sep, end).', notes: 'Comments begin with #. Use sep and end in print() to customize output formatting.' },
+                            { title: 'Taking User Input in Python', videoId: 'WvG-R-xXouA', desc: 'Reading interactive input with input() and formatting output with f-strings.', notes: 'input() always returns a string (str); cast to int() or float() for math.' }
+                        ]
+                    },
+                    {
+                        title: 'Topic 03: Variables and Data Types',
+                        lessons: [
+                            { title: 'Variables and Built-in Data Types', videoId: 'ORCuz7s5cCY', desc: 'Deep dive into int, float, complex, bool, str, and NoneType.', notes: 'Python is dynamically typed. Use type(x) to inspect the runtime type of any variable.' },
+                            { title: 'Variable Naming Rules & Memory References', videoId: 'TqPzwenhMj0', desc: 'Identifier naming rules (snake_case), object identity with id(), and references.', notes: 'Variables are references to objects in memory.' }
+                        ]
+                    },
+                    {
+                        title: 'Topic 04: Type Conversions',
+                        lessons: [
+                            { title: 'Implicit vs Explicit Typecasting in Python', videoId: 'Pu5bqySSSS0', desc: 'Automatic coercion vs manual casting using int(), float(), str(), and bool().', notes: 'Explicit casting converts types via int(), float(), str(). Invalid casts raise ValueError.' }
+                        ]
+                    },
+                    {
+                        title: 'Topic 05: Operators in Python',
+                        lessons: [
+                            { title: 'Arithmetic, Assignment & Comparison Operators', videoId: 'FLVqcxnJP_E', desc: 'Working with +, -, *, /, //, %, **, and relational operators.', notes: '// performs floor division; ** performs exponentiation.' },
+                            { title: 'Logical, Identity, Membership & Bitwise Operators', videoId: 'PyfKCvHALj8', desc: 'Understanding and, or, not, short-circuiting, in, is, and bitwise operations.', notes: 'Use == to compare values and is to check object identity.' }
+                        ]
+                    },
+                    {
+                        title: 'Topic 06: Conditional Statements',
+                        lessons: [
+                            { title: 'If, Elif, Else & Nested Conditional Statements', videoId: 'ceiuLR2ysas', desc: 'Decision making and branching using if, elif, else, and indentation rules.', notes: 'Indentation (4 spaces) defines code blocks in Python.' }
+                        ]
+                    },
+                    {
+                        title: 'Topic 07: Loops and Iterations',
+                        lessons: [
+                            { title: 'For Loops and the range() Function', videoId: 'fIYVzKp0q5w', desc: 'Iterating over sequences and numeric ranges using range(start, stop, step).', notes: 'range(start, stop, step) generates integers up to but excluding stop.' },
+                            { title: 'While Loops & Condition-Controlled Iteration', videoId: '-tCFyIyKVx0', desc: 'Writing while loops, loop counters, and preventing infinite loops.', notes: 'Always update the condition variable inside the while loop body.' }
+                        ]
+                    },
+                    {
+                        title: 'Topic 08: Nested Loops & Loop Control Statements',
+                        lessons: [
+                            { title: 'Break, Continue, and Pass Statements', videoId: 'RkwJnjdrm70', desc: 'Controlling loop flow: break exits early, continue skips iteration, pass is a placeholder.', notes: 'break exits the innermost loop; continue jumps to the next iteration.' },
+                            { title: 'Nested Loops & Loop-Else Clauses', videoId: 'qUkcIgErZzc', desc: '2D iteration, pattern printing, and how else works on for/while loops.', notes: 'The loop else block executes only if the loop completes without hitting break.' }
+                        ]
+                    },
+                    {
+                        title: 'Topic 09: Strings and String Methods',
+                        lessons: [
+                            { title: 'Strings Fundamentals & Indexing', videoId: 'kMNFQYArrLg', desc: 'String creation, positive and negative indexing, and immutability.', notes: 'Strings are immutable sequences of Unicode characters.' },
+                            { title: 'String Slicing & Operations', videoId: '8jW7lpT8HW8', desc: 'Extracting substrings with s[start:stop:step] and reversing strings.', notes: 's[::-1] returns a reversed copy of the string.' },
+                            { title: 'Essential String Methods', videoId: '0INvoK_T0cE', desc: 'strip(), split(), join(), replace(), find(), count(), upper(), and lower().', notes: 'String methods always return a new string without mutating the original.' }
+                        ]
+                    },
+                    {
+                        title: 'Topic 10: Lists and Tuples',
+                        lessons: [
+                            { title: 'Introduction to Lists & List Comprehensions', videoId: 'eF6nK5bSlmg', desc: 'Dynamic arrays, indexing, slicing, and concise list comprehensions.', notes: 'List comprehension syntax: [expr for item in iterable if condition].' },
+                            { title: 'List Methods (append, extend, insert, pop, sort)', videoId: 'scWc3F8LbOo', desc: 'Mutating lists in-place, sorting lists, and copying lists safely.', notes: 'list.sort() sorts in-place; sorted(list) returns a new sorted list.' },
+                            { title: 'Tuples, Packing & Unpacking', videoId: 'PipsOUDKrVk', desc: 'Immutable sequences, tuple unpacking, and using tuples as dict keys.', notes: 'Tuples are immutable and hashable when their elements are hashable.' }
+                        ]
+                    },
+                    {
+                        title: 'Topic 11: Dictionaries and Sets',
+                        lessons: [
+                            { title: 'Dictionaries: Key-Value Pairs & Hash Maps', videoId: 'j2G68uQtOwM', desc: 'Creating dicts, .get(), iterating .keys(), .values(), .items().', notes: 'Dictionaries provide O(1) average time complexity for key lookups.' },
+                            { title: 'Sets: Uniqueness & Fast Membership Testing', videoId: 'l3kCO8cVA6o', desc: 'Creating sets with set(), deduplicating collections, and O(1) membership.', notes: 'Sets store unique, unordered elements. Use set() for an empty set.' },
+                            { title: 'Set Methods & Mathematical Set Operations', videoId: 'HOrutCnp2zo', desc: 'Union (|), intersection (&), difference (-), and symmetric difference (^).', notes: 'Use a.union(b) and a.intersection(b) to combine or compare sets.' }
+                        ]
+                    },
+                    {
+                        title: 'Topic 12: Functions in Python',
+                        lessons: [
+                            { title: 'Defining Functions, Parameters & Return Values', videoId: 'dyvxxJSGUsE', desc: 'def keyword, return values, variable scope (LEGB), and modularity.', notes: 'Functions without an explicit return statement return None.' },
+                            { title: 'Function Arguments: Default, Keyword, *args & **kwargs', videoId: '0d6b6fFuCkE', desc: 'Positional vs keyword arguments, defaults, *args tuple, and **kwargs dict.', notes: '*args packs extra positional args; **kwargs packs extra keyword args.' },
+                            { title: 'Lambda Functions, map(), filter(), and reduce()', videoId: 'OErhjT4f5Cs', desc: 'Anonymous inline functions and functional programming tools in Python.', notes: 'map(fn, seq) and filter(pred, seq) transform and filter iterables lazily.' }
+                        ]
+                    },
+                    {
+                        title: 'Topic 13: Recursion',
+                        lessons: [
+                            { title: 'Recursion: Base Cases, Call Stack & Classic Problems', videoId: 'XYwJKFB8DUk', desc: 'Call frames, base conditions, factorial, Fibonacci, and recursive problem solving.', notes: 'Every recursive function must define a terminating base case.' }
+                        ]
+                    },
+                    {
+                        title: 'Topic 14: Object-Oriented Programming (OOP)',
+                        lessons: [
+                            { title: 'Classes, Objects, Constructors & Decorators', videoId: 'PTBZ674EsvI', desc: 'Defining classes, self, __init__ constructors, and method decorators.', notes: '__init__(self, ...) initializes new instances of a class.' },
+                            { title: 'Encapsulation, Getters & Setters (@property)', videoId: '2gbCT8h9uyk', desc: 'Using @property decorators for controlled attribute access and validation.', notes: '@property allows methods to be accessed like attributes.' },
+                            { title: 'Instance Variables vs Class Variables', videoId: 'tQdaeiF4j38', desc: 'Per-instance attributes vs shared class-level attributes.', notes: 'Instance variables belong to self; class variables are shared across instances.' }
+                        ]
+                    },
+                    {
+                        title: 'Topic 15: File Handling',
+                        lessons: [
+                            { title: 'File I/O: Opening, Reading, and Writing Files', videoId: 'eDBPlcWYses', desc: 'File modes (r, w, a), text vs binary files, and with open() context managers.', notes: 'Always use with open(...) as f: so files close automatically.' },
+                            { title: 'Working with read(), readline(), readlines() & seek()', videoId: 'l1FsnQxET9U', desc: 'Line-by-line file streaming, writing lines, and file pointer positioning.', notes: 'Iterate over the file object directly for memory-efficient line reading.' }
+                        ]
+                    },
+                    {
+                        title: 'Topic 16: Exception Handling',
+                        lessons: [
+                            { title: 'Try, Except & Handling Runtime Errors', videoId: '6SPDvPK38tw', desc: 'Catching ValueError, ZeroDivisionError, KeyError, and raising exceptions.', notes: 'Catch specific exceptions rather than using a bare except clause.' },
+                            { title: 'The finally Keyword & Resource Cleanup', videoId: 'r_iuC-IDpPM', desc: 'Using try-except-else-finally blocks for guaranteed cleanup.', notes: 'The finally block always runs regardless of whether an exception occurred.' }
+                        ]
+                    }
+                ]
+            },
+            {
+                name: 'Web Application Development',
+                modules: [
+                    {
+                        title: 'Topic 01: HTML5 Fundamentals & Semantic Structure',
+                        lessons: [
+                            { title: 'Complete HTML5 Structure, Tags, Forms & Tables', videoId: 'HcOc7P5BMi4', desc: 'Semantic elements (header, nav, main, section, article), forms, and accessibility.', notes: 'Semantic HTML improves accessibility and search engine indexing.' },
+                            { title: 'HTML Crash Course: Building Structured Web Pages', videoId: 'qz0aGYrrlhU', desc: 'Structuring real-world web pages with clean markup, links, images, and lists.', notes: 'Always provide descriptive alt text on images and associate labels with inputs.' }
+                        ]
+                    },
+                    {
+                        title: 'Topic 02: CSS3 Styling, Flexbox & Grid Layouts',
+                        lessons: [
+                            { title: 'CSS3 Fundamentals, Selectors & The Box Model', videoId: 'ESnrn1kAD4E', desc: 'Specificity, cascade, margin, border, padding, and box-sizing: border-box.', notes: 'Use box-sizing: border-box for predictable element sizing.' },
+                            { title: 'Mastering CSS Flexbox Layouts', videoId: 'JJSoEo8JSnc', desc: 'Main vs cross axis, justify-content, align-items, flex-wrap, and gap.', notes: 'Flexbox is ideal for one-dimensional row or column component alignment.' },
+                            { title: 'Two-Dimensional Responsive Layouts with CSS Grid', videoId: 't6CBKf8K_Ac', desc: 'grid-template-columns, auto-fit, minmax(), grid areas, and responsive design.', notes: 'CSS Grid excels at two-dimensional page and dashboard layouts.' }
+                        ]
+                    },
+                    {
+                        title: 'Topic 03: Modern JavaScript (ES6+ & DOM)',
+                        lessons: [
+                            { title: 'JavaScript Fundamentals: Variables, Functions & Arrays', videoId: 'W6NZfCO5SIk', desc: 'let/const, arrow functions, objects, array methods (map, filter, reduce).', notes: 'Prefer const by default and let when reassignment is required.' },
+                            { title: 'DOM Manipulation, Events, Fetch API & Async/Await', videoId: 'VlPiVmYuoqw', desc: 'Selecting DOM nodes, event listeners, Promises, async/await, and REST APIs.', notes: 'Use async/await with try/catch blocks when fetching JSON data.' }
+                        ]
+                    },
+                    {
+                        title: 'Topic 04: React & Component Architecture',
+                        lessons: [
+                            { title: 'React Fundamentals: Components, JSX, Props & State', videoId: 'SqcY0GlETPk', desc: 'Component-driven UI, passing props, and managing state with useState.', notes: 'React components render declaratively based on props and state.' },
+                            { title: 'Full React Course: Hooks, Routing & State Management', videoId: 'TtPXvEcE11E', desc: 'Building complete single-page applications with useEffect, custom hooks, and routing.', notes: 'Keep state localized and lift state up when shared between siblings.' }
+                        ]
+                    }
+                ]
+            },
+            {
+                name: 'Quantitative Aptitude',
+                modules: [
+                    {
+                        title: 'Topic 01: Number Systems & Arithmetic',
+                        lessons: [
+                            { title: 'Number System Essentials, Divisibility & Factors', videoId: '20JNw2XSfdM', desc: 'Divisibility rules, LCM & HCF, unit digit cyclicity, and remainders.', notes: 'Product of two numbers = HCF × LCM.' }
+                        ]
+                    },
+                    {
+                        title: 'Topic 02: Percentages & Applications',
+                        lessons: [
+                            { title: 'Percentages: Fraction-to-Percent Conversions & Shortcuts', videoId: 'RWdNhJWwzSs', desc: 'Rapid percentage calculations and successive percentage change formulas.', notes: 'Successive change of a% and b% = (a + b + ab/100)%.' },
+                            { title: 'Word Problems & Placement Questions on Percentages', videoId: '_TdyTKpNY8g', desc: 'Solving exam-level problems on population, price-consumption, and elections.', notes: 'Use fraction equivalents (e.g., 12.5% = 1/8, 16.67% = 1/6) for speed.' }
+                        ]
+                    },
+                    {
+                        title: 'Topic 03: Ratio, Proportion & Mixtures',
+                        lessons: [
+                            { title: 'Ratio and Proportion Fundamentals & Shortcut Tricks', videoId: 'jfoJBivWlnQ', desc: 'Combining ratios, fourth/mean proportionals, and partnership problems.', notes: 'Scale common terms to merge A:B and B:C into A:B:C.' }
+                        ]
+                    },
+                    {
+                        title: 'Topic 04: Time and Work',
+                        lessons: [
+                            { title: 'Time, Work & Efficiency Method (LCM Approach)', videoId: 'KE7tQf9spPg', desc: 'Taking total work as LCM of days, individual efficiencies, and pipes & cisterns.', notes: 'Work = Efficiency × Time. Set Total Work = LCM of given days.' }
+                        ]
+                    }
+                ]
+            },
+            {
+                name: 'Introduction to Generative AI',
+                modules: [
+                    {
+                        title: 'Topic 01: Generative AI & LLM Foundations',
+                        lessons: [
+                            { title: 'What is Generative AI? Models, Tokens & Transformers', videoId: 'NRmAXDWJVnU', desc: 'How generative models work, tokenization, embeddings, and next-token prediction.', notes: 'LLMs predict the next token probability distribution over a context window.' },
+                            { title: 'Generative AI Foundations Full Lecture', videoId: 'd4yCWBGFCEs', desc: 'Foundation models, fine-tuning vs RAG, and practical AI capabilities.', notes: 'Retrieval-Augmented Generation grounds LLM outputs in verified data.' }
+                        ]
+                    },
+                    {
+                        title: 'Topic 02: Prompt Engineering',
+                        lessons: [
+                            { title: 'Prompt Engineering Masterclass: Zero-Shot, Few-Shot & CoT', videoId: '_ZvnD73m40o', desc: 'System instructions, few-shot examples, Chain-of-Thought, and structured outputs.', notes: 'Define Role, Task, Context, Constraints, and Output Format in prompts.' },
+                            { title: 'Google Prompt Design Principles & Best Practices', videoId: 'p09yRj47kNM', desc: 'Iterative prompt refinement, temperature settings, and reducing hallucinations.', notes: 'Use low temperature (0.0 - 0.2) for deterministic analytical or coding tasks.' }
+                        ]
+                    },
+                    {
+                        title: 'Topic 03: Working with AI Tools & Workflows',
+                        lessons: [
+                            { title: 'Building AI Applications with LLMs & LangChain', videoId: 't2bSApmPzU4', desc: 'Connecting LLMs with prompt templates, chains, memory, and external tools.', notes: 'Compose AI pipelines into modular retrieval, reasoning, and validation steps.' }
+                        ]
+                    }
+                ]
+            },
+            {
+                name: 'Communicative English Foundation',
+                modules: [
+                    {
+                        title: 'Topic 01: Communication Basics',
+                        lessons: [
+                            { title: 'Introduction to Effective Communication & Active Listening', videoId: 'u16EPwFmdis', desc: 'Verbal vs non-verbal cues, overcoming communication barriers, and active listening.', notes: 'Active listening and clarity are the foundation of workplace communication.' },
+                            { title: 'Think Fast, Talk Smart: Structured Spontaneous Speaking', videoId: 'HAnw168huqA', desc: 'Using the What – So What – Now What framework for clear impromptu responses.', notes: 'Structure spontaneous answers with What -> So What -> Now What.' }
+                        ]
+                    },
+                    {
+                        title: 'Topic 02: Grammar Essentials & Spoken Fluency',
+                        lessons: [
+                            { title: 'Developing English Speaking Fluency & Sentence Precision', videoId: 'CAU2zx2Ri_M', desc: 'Thinking in English, tense consistency, subject-verb agreement, and articulation.', notes: 'Practice summarizing technical topics aloud to build natural fluency.' }
+                        ]
+                    },
+                    {
+                        title: 'Topic 03: Presentation Skills & Public Speaking',
+                        lessons: [
+                            { title: 'Delivering Confident Presentations in English', videoId: 'Q074YSGwRTM', desc: 'Opening hooks, signposting transitions, explaining visuals, and handling Q&A.', notes: 'Use signposting phrases to guide listeners smoothly between sections.' },
+                            { title: 'Presentation Skills: Voice Modulation & Body Language', videoId: 'IY5KUKe1rKs', desc: 'Pacing, vocal emphasis, eye contact, and stage presence during demos.', notes: 'Pause intentionally before and after key points for emphasis.' }
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        let activePage = 'dashboard', currentCourse = 0, currentModule = 0, currentLesson = 0;
+        const completed = new Set();
+        window.completed = completed;
+        let activeResource = 'details';
+        const iconBook = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v17H6.5A2.5 2.5 0 0 0 4 22z"/><path d="M4 5.5v14A2.5 2.5 0 0 1 6.5 17H20"/></svg>';
+
+        function getLessonKey(cIdx, mIdx, lIdx) {
+            return `${cIdx}-${mIdx}-${lIdx}`;
+        }
+
+        function toast(message) {
+            const el = document.getElementById('toast');
+            el.textContent = message;
+            el.classList.add('show');
+            clearTimeout(window.toastTimer);
+            window.toastTimer = setTimeout(() => el.classList.remove('show'), 2500);
+        }
+
+        function showPage(page) {
+            activePage = page;
+            document.querySelectorAll('.view').forEach(v => v.classList.toggle('active', v.id === 'view-' + page));
+            document.querySelectorAll('.nav-item').forEach(b => b.classList.toggle('active', b.dataset.page === page));
+            document.getElementById('lessonShell').classList.remove('active');
+            document.querySelector('.layout').style.display = 'grid';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (page === 'curriculum') renderCurriculum();
+        }
+
+        document.querySelectorAll('.nav-item').forEach(b => b.addEventListener('click', () => showPage(b.dataset.page)));
+        document.querySelectorAll('[data-page-link]').forEach(b => b.addEventListener('click', () => showPage(b.dataset.pageLink)));
+
+        function renderCurriculum() {
+            const host = document.getElementById('curriculumList');
+            const bannerCount = document.querySelector('#view-curriculum .count-pill');
+            if (bannerCount) bannerCount.textContent = `Courses: ${courseData.length}`;
+
+            host.innerHTML = courseData.map((c, cIdx) => {
+                const totalLectures = c.modules.reduce((acc, m) => acc + m.lessons.length, 0);
+                return `
+                <article class="curriculum-course ${cIdx === currentCourse ? 'open' : ''}">
+                    <button class="curriculum-toggle" data-course="${cIdx}">
+                        <span class="book-icon">${iconBook}</span>
+                        <span class="curriculum-name">${c.name}</span>
+                        <span class="curriculum-count count-pill">Topics: ${c.modules.length} • Lectures: ${totalLectures}</span>
+                        <span class="curriculum-chevron">⌄</span>
+                    </button>
+                    <div class="curriculum-lessons" style="padding: 16px 24px 22px; background: #fff;">
+                        ${c.modules.map((m, mIdx) => {
+                            const doneInTopic = m.lessons.filter((_, lIdx) => completed.has(getLessonKey(cIdx, mIdx, lIdx))).length;
+                            return `
+                            <div style="border: 1px solid #d2dce9; border-radius: 14px; overflow: hidden; margin-bottom: 14px; background: #fbfcfe;">
+                                <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; background: #f4f7fc; border-bottom: 1px solid #e5edf8;">
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <span style="background: #dceaff; color: #2463eb; font-size: 11px; font-weight: 700; padding: 4px 9px; border-radius: 7px;">TOPIC ${String(mIdx + 1).padStart(2, '0')}</span>
+                                        <strong style="font-size: 14px; color: #101827;">${m.title.replace(/^Topic\s*\d+:\s*/i, '')}</strong>
+                                    </div>
+                                    <span style="font-size: 12px; color: #52647d; font-weight: 500; background: #fff; border: 1px solid #d2dce9; padding: 3px 10px; border-radius: 99px;">
+                                        ${doneInTopic}/${m.lessons.length} ${m.lessons.length === 1 ? 'Lecture' : 'Lectures'}
+                                    </span>
+                                </div>
+                                <div style="padding: 8px 10px; background: #fff;">
+                                    ${m.lessons.map((l, lIdx) => {
+                                        const isDone = completed.has(getLessonKey(cIdx, mIdx, lIdx));
+                                        return `
+                                        <button class="curriculum-lesson" data-course-idx="${cIdx}" data-mod-idx="${mIdx}" data-les-idx="${lIdx}" style="border-radius: 10px; margin-bottom: 4px;">
+                                            <span class="lesson-small-icon" style="${isDone ? 'background:#d1fae5;color:#059669;' : ''}">${isDone ? '✓' : '▷'}</span>
+                                            <span>
+                                                <strong style="font-weight: 600; font-size: 13.5px; color: #101827;">Lecture ${mIdx + 1}.${lIdx + 1}: ${l.title}</strong><br>
+                                                <small style="color: #64748b; font-size: 12px;">${l.desc || 'Topic Video Lecture'}</small>
+                                            </span>
+                                            <span style="font-size: 12px; font-weight: 600; color: #2463eb; white-space: nowrap;">Watch Lecture ›</span>
+                                        </button>`;
+                                    }).join('')}
+                                </div>
+                            </div>`;
+                        }).join('')}
+                    </div>
+                </article>`;
+            }).join('');
+        }
+
+        document.getElementById('curriculumList').addEventListener('click', e => {
+            const t = e.target.closest('[data-course]');
+            if (t) {
+                t.closest('.curriculum-course').classList.toggle('open');
+                return;
+            }
+            const l = e.target.closest('[data-course-idx]');
+            if (l) {
+                currentCourse = Number(l.dataset.courseIdx);
+                currentModule = Number(l.dataset.modIdx);
+                currentLesson = Number(l.dataset.lesIdx);
+                openLesson();
+            }
+        });
+
+        function renderLessonGroups() {
+            const host = document.getElementById('lessonSidebarGroups');
+            const activeCourseObj = courseData[currentCourse] || courseData[0];
+            host.innerHTML = activeCourseObj.modules.map((m, i) => `
+                <div class="lesson-group ${i === currentModule ? 'open' : ''}">
+                    <button class="lesson-group-toggle" data-group="${i}">
+                        <span class="group-icon">▱</span>
+                        <span>${m.title}</span>
+                        <span class="group-chevron">⌄</span>
+                    </button>
+                    <div class="lesson-sublist">
+                        ${m.lessons.map((l, j) => {
+                            const isDone = completed.has(getLessonKey(currentCourse, i, j)) || (currentCourse === 0 && completed.has(i + '-' + j));
+                            return `
+                            <button class="lesson-nav-item ${i === currentModule && j === currentLesson ? 'selected' : ''}" data-open-module="${i}" data-open-lesson-index="${j}">
+                                <span class="tiny-icon">▷</span>
+                                <span>${l.title}</span>
+                                ${isDone ? '<span class="done-mark">●</span>' : ''}
+                            </button>`;
+                        }).join('')}
+                    </div>
+                </div>`).join('');
+        }
+
+        document.getElementById('lessonSidebarGroups').addEventListener('click', e => {
+            const group = e.target.closest('[data-group]');
+            if (group) {
+                group.closest('.lesson-group').classList.toggle('open');
+                return;
+            }
+            const lesson = e.target.closest('[data-open-module]');
+            if (lesson) {
+                currentModule = Number(lesson.dataset.openModule);
+                currentLesson = Number(lesson.dataset.openLessonIndex);
+                updateLesson();
+            }
+        });
+
+        function openLesson() {
+            document.querySelector('.layout').style.display = 'none';
+            document.getElementById('lessonShell').classList.add('active');
+            renderLessonGroups();
+            updateLesson();
+        }
+
+        function updateLesson() {
+            const courseObj = courseData[currentCourse] || courseData[0];
+            const mod = courseObj.modules[currentModule] || courseObj.modules[0];
+            const les = mod.lessons[currentLesson] || mod.lessons[0];
+            const key = getLessonKey(currentCourse, currentModule, currentLesson);
+            const isDone = completed.has(key) || (currentCourse === 0 && completed.has(currentModule + '-' + currentLesson));
+
+            document.getElementById('lessonTitle').textContent = les.title;
+            const crumbCourseEl = document.getElementById('crumbCourse');
+            if (crumbCourseEl) crumbCourseEl.textContent = courseObj.name;
+            document.getElementById('crumbModule').textContent = mod.title;
+
+            if (les.videoId) {
+                document.getElementById('videoFrame').innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${les.videoId}?rel=0&modestbranding=1" title="${les.title.replace(/"/g, '&quot;')}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
+            } else {
+                document.getElementById('videoFrame').innerHTML = '<div class="video-placeholder"><div class="play-circle">▶</div><p>No video connected yet for “' + les.title.replace(/[<>&]/g, '') + '”.</p></div>';
+            }
+
+            document.getElementById('completeLesson').textContent = isDone ? '✓ Completed' : '✓ Mark as complete';
+            document.getElementById('completeLesson').style.background = isDone ? '#e4f9ee' : '#fff';
+            document.getElementById('completeLesson').style.color = isDone ? '#15975c' : '#31435d';
+            document.getElementById('prevLesson').disabled = currentModule === 0 && currentLesson === 0;
+            document.getElementById('nextLesson').disabled = currentModule === courseObj.modules.length - 1 && currentLesson === mod.lessons.length - 1;
+            renderLessonGroups();
+            renderResource();
+        }
+        window.updateLesson = updateLesson;
+
+        function stepLesson(direction) {
+            const courseObj = courseData[currentCourse] || courseData[0];
+            let m = currentModule, l = currentLesson + direction;
+            if (l < 0) {
+                m--;
+                if (m < 0) return;
+                l = courseObj.modules[m].lessons.length - 1;
+            } else if (l >= courseObj.modules[m].lessons.length) {
+                m++;
+                if (m >= courseObj.modules.length) return;
+                l = 0;
+            }
+            currentModule = m;
+            currentLesson = l;
+            updateLesson();
+        }
+
+        document.getElementById('prevLesson').addEventListener('click', () => stepLesson(-1));
+        document.getElementById('nextLesson').addEventListener('click', () => stepLesson(1));
+        document.getElementById('expandVideo').addEventListener('click', () => {
+            const vf = document.getElementById('videoFrame');
+            if (!document.fullscreenElement) vf.requestFullscreen?.();
+            else document.exitFullscreen?.();
+        });
+
+        document.getElementById('completeLesson').addEventListener('click', () => {
+            const key = getLessonKey(currentCourse, currentModule, currentLesson);
+            completed.add(key);
+            updateLesson();
+            if (window.saveProgressFirebase) {
+                window.saveProgressFirebase(`${currentCourse}_${currentModule}`, currentLesson);
+            }
+            toast('Lecture marked complete.');
+        });
+
+        document.querySelectorAll('[data-back-curriculum]').forEach(b => b.addEventListener('click', () => showPage('curriculum')));
+        document.querySelectorAll('[data-open-lesson]').forEach((b, idx) => b.addEventListener('click', () => {
+            if (idx === 0) { currentCourse = 0; currentModule = 6; currentLesson = 0; }
+            else if (idx === 1) { currentCourse = 3; currentModule = 0; currentLesson = 0; }
+            else if (idx === 2) { currentCourse = 1; currentModule = 0; currentLesson = 0; }
+            openLesson();
+        }));
+        document.querySelectorAll('[data-resource]').forEach(b => b.addEventListener('click', () => {
+            activeResource = b.dataset.resource;
+            document.querySelectorAll('[data-resource]').forEach(x => x.classList.toggle('active', x === b));
+            renderResource();
+        }));
+
+        function renderResource() {
+            const host = document.getElementById('resourceContent');
+            const courseObj = courseData[currentCourse] || courseData[0];
+            const mod = courseObj.modules[currentModule] || courseObj.modules[0];
+            const les = mod.lessons[currentLesson] || mod.lessons[0];
+
+            if (activeResource === 'details') {
+                host.innerHTML = `<h3>${les.title}</h3><p style="margin-bottom:14px">${les.desc || ''}</p><div style="background:#f4f7fc;border-left:3px solid #2463eb;padding:12px 14px;border-radius:8px;font-size:13px;color:#1e293b;margin-bottom:20px;"><strong>Key Takeaway:</strong><br>${les.notes || ''}</div><h3>Your learning checklist</h3><p>▶ Watch the topic video lecture<br>✎ Review key takeaways & save your notes<br>✓ Mark the lecture complete when done</p>`;
+            } else if (activeResource === 'notes') {
+                host.innerHTML = '<h3>My lecture notes</h3><p>Write notes for this topic. Notes are automatically saved to your profile.</p><textarea id="lessonNotes" placeholder="Write your notes here..."></textarea><button class="btn-blue" id="saveLessonNotes" style="margin-top:10px">Save notes</button>';
+            } else {
+                host.innerHTML = `<h3>Topic resources</h3><p><strong>Course:</strong> ${courseObj.name}<br><strong>Topic:</strong> ${mod.title}<br><strong>Video ID:</strong> <code>${les.videoId}</code> (<a href="https://www.youtube.com/watch?v=${les.videoId}" target="_blank" rel="noopener" style="color:#2463eb">Open on YouTube ↗</a>)</p>`;
+            }
+            const save = document.getElementById('saveLessonNotes');
+            if (save) {
+                const key = `ls-note-${currentCourse}-${currentModule}-${currentLesson}`;
+                document.getElementById('lessonNotes').value = localStorage.getItem(key) || '';
+                save.onclick = () => {
+                    const txt = document.getElementById('lessonNotes').value;
+                    localStorage.setItem(key, txt);
+                    if (window.saveNoteFirebase) {
+                        window.saveNoteFirebase(`${currentCourse}_${currentModule}`, currentLesson, txt);
+                    }
+                    toast('Notes saved successfully.');
+                };
+            }
+        }
+
+        document.getElementById('saveQuickNote').addEventListener('click', () => {
+            const value = document.getElementById('quickNote').value.trim();
+            if (!value) { toast('Write a note first.'); return; }
+            const key = 'ls-quick-notes';
+            const old = localStorage.getItem(key) || '';
+            localStorage.setItem(key, old + (old ? '\n' : '') + value);
+            document.getElementById('quickNote').value = '';
+            toast('Quick note saved.');
+        });
+
+        document.getElementById('searchBtn').addEventListener('click', () => {
+            const q = prompt('Search topics and lectures across all courses:');
+            if (!q) return;
+            const term = q.toLowerCase().trim();
+            for (let c = 0; c < courseData.length; c++) {
+                for (let m = 0; m < courseData[c].modules.length; m++) {
+                    const mod = courseData[c].modules[m];
+                    const lIdx = mod.lessons.findIndex(l => l.title.toLowerCase().includes(term) || (l.desc && l.desc.toLowerCase().includes(term)));
+                    if (lIdx >= 0 || mod.title.toLowerCase().includes(term)) {
+                        currentCourse = c;
+                        currentModule = m;
+                        currentLesson = Math.max(0, lIdx);
+                        openLesson();
+                        return;
+                    }
+                }
+            }
+            toast('No matching topic or lecture found.');
+        });
+
+        document.getElementById('shortcutBtn').addEventListener('click', () => showPage('curriculum'));
+        document.getElementById('quickBtn').addEventListener('click', () => toast('Quick actions: choose a topic from Curriculum or continue your active lecture.'));
+        document.getElementById('calendarBtn').addEventListener('click', () => toast('Calendar view loaded.'));
+        let dateOffset = 0;
+        function updateDate() {
+            const d = new Date(2026, 9, 26 + dateOffset);
+            document.getElementById('scheduleDate').textContent = d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+            document.getElementById('todayPill').style.display = dateOffset === 0 ? 'inline-block' : 'none';
+        }
+        document.getElementById('prevDate').addEventListener('click', () => { dateOffset--; updateDate(); });
+        document.getElementById('nextDate').addEventListener('click', () => { dateOffset++; updateDate(); });
+        document.getElementById('carouselPrev').addEventListener('click', () => { const c = document.getElementById('continueCarousel'); c.prepend(c.lastElementChild); });
+        document.getElementById('carouselNext').addEventListener('click', () => { const c = document.getElementById('continueCarousel'); c.append(c.firstElementChild); });
+        document.querySelectorAll('[data-event-tab]').forEach(b => b.addEventListener('click', () => {
+            document.querySelectorAll('[data-event-tab]').forEach(x => x.classList.toggle('active', x === b));
+            const past = b.dataset.eventTab === 'past';
+            document.getElementById('eventContent').querySelector('.event-tag').textContent = past ? 'Completed' : 'Learning Reminder';
+            document.getElementById('eventContent').querySelector('.event-name').textContent = past ? 'Python Introduction' : 'Python Practice Session';
+            document.getElementById('eventContent').querySelector('.event-desc').textContent = past ? 'Review your completed lessons and continue building consistency.' : 'Continue your Python course and finish the next lesson in your learning path.';
+        }));
+        renderCurriculum(); renderLessonGroups(); updateDate();
+    </script>
+</body>
+
+</html>
